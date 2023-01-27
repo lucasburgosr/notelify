@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    <link rel="stylesheet" href="/../styles.css">
+
+    <title>Notelify - Espacio de Trabajo</title>
+</head>
+
+<body id="bodyCss">
+    <!-- Navbar principal -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light px-5">
+        <div class="container-fluid">
+            <a class="navbar-brand" th:href="@{/inicio}"> <i class='far fa-clone me-2'></i>Notelify</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Espacios de Trabajo
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li th:each="espacioDelUsuario : ${espaciosDelUsuarioLogeado}">
+                                <a class="dropdown-item py-2" th:if="${espacioDelUsuario.activo}"
+                                    th:href="@{/espacio-trabajo/mi-espacio/} + ${espacioDelUsuario.id} + '/' + ${session.usuariosession.id}"
+                                    th:text="${espacioDelUsuario.nombre}"></a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <!-- Boton trigger navbar lateral -->
+                    <li class="nav-item">
+                        <a class="nav-link " aria-current="page" href="#" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseWidthExample" aria-expanded="false"
+                            aria-controls="collapseWidthExample">Menú</a>
+                    </li>
+                </ul>
+                <!-- Nombre del usuario -->
+                <div class="navbar-nav mb-2 mb-lg-0">
+                    <div class="nav-item">
+                        <span aria-current="page" th:text="${session.usuariosession.username}"></span>
+                    </div>
+                </div>
+                <!-- Foto y menu del usuario -->
+                <ul class="navbar-nav mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <img th:if="${session.usuariosession.fotoPerfil != null}"
+                                th:src="${'/imagen/usuario/' + session.usuariosession.id}"
+                                alt="Foto del perfil del usuario" width="40" height="40" class="rounded-circle">
+                            <img th:if="${session.usuariosession.fotoPerfil == null}"
+                                src="https://res.cloudinary.com/dzyvb836r/image/upload/v1653263323/icon-guybrush3_yfuapy.ico"
+                                alt="Foto de perfil por defecto" width="40" height="40" class="rounded-circle">
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" th:href="@{/usuario/editar/} + ${session.usuariosession.id}">
+                                Editar Perfil
+                            </a>
+                            <a class="dropdown-item" th:href="@{/logout}">
+                                Cerrar sesión
+                            </a>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Modal CREAR TAREA -->
+    <div class="modal fade" id="staticModalCrearTarea" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticModalCrearTareaLabel" aria-hidden="true" style="background-color: rgba(0, 0, 0, 0.7);">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticModalCrearTareaLabel">Nueva Tarea
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form th:action="@{/tarea/crear}" method="POST">
+                        <input type="hidden" name="idEspacio" th:value="${espacio.id}">
+                        <input type="hidden" name="idUsuario" th:value="${session.usuariosession.id}">
+
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Título</label>
+                            <input type="text" class="form-control" id="exampleFormControlInput1" name="titulo"
+                                required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleFormControlTextarea1" class="form-label">Descripción (Opcional)</label>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                                name="descripcion"></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <!--<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>-->
+                            <button type="submit" class="btn btn-success">Crear</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Navbar lateral -->
+            <div class="collapse collapse-horizontal nav flex-column col-1" id="collapseWidthExample"
+                style="min-height: 900px;">
+                <div class="nav flex-column">
+                    <ul class="nav flex-column d-flex justify-content-start">
+                        <li class="nav-item m-2">
+                            <a class="nav-link active" aria-current="page" href="#" id="navBarVert">
+                                <i class='fas fa-cubes me-2'></i>Tableros
+                            </a>
+                        </li>
+                        <li class="nav-item m-2">
+                            <a class="nav-link" href="#" id="navBarVert">
+                                <i class='fas fa-user-friends me-2'></i>Miembros
+                            </a>
+                        </li>
+                        <li class="nav-item m-2">
+                            <a class="nav-link" href="#" id="navBarVert">
+                                <i class='fas fa-cog me-2'></i>Config
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Body de las columnas -->
+            <div class="d-flex flex-column col">
+                <div class="container-fluid">
+
+                    <!-- Nombre del espacio de tabajo -->
+                    <div class="row p-4  d-lg-none d-xl-block d-xl-none d-xxl-block d-xxl-none">
+                        <div class="card " id="cardNameWorkSpace">
+                            <div class="card-body">
+                                <h4 class="text-center align-center " id="tittleList" th:text="${espacio.nombre}"></h4>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row p-1">
+                        <div class="d-flex flex-column col-12">
+                            <!-- Row 1 -->
+                            <div class="row d-flex justify-content-start">
+
+                                <!-- Columna TODO -->
+                                <div class="flex-column col-xxl-2  col-xl-3 col-lg-3 col-lg-2 col-md-4 p-4" id="list2">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="card-header">
+                                                <h4 id="tittleList">Pendientes</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div th:each="pendiente : ${pendientes}">
+                                        <div class="card">
+                                            <div class="card-body" id="parent">
+                                                <p class="fw-bolder" th:text="${pendiente.titulo}"></p>
+                                                <p th:text="${pendiente.descripcion}"></p>
+                                                <div id="hover-content">
+                                                    <!-- Boton trigger modal Editar -->
+                                                    <a type="button" data-bs-toggle="modal"
+                                                        th:data-bs-target="'#TodoEdit' + ${pendiente.id}">
+                                                        <i class='fas fa-pencil-alt me-2'></i>
+                                                        <span class="me-4">Editar</span>
+                                                    </a>
+                                                    <!-- Boton trigger modal Mover Estado -->
+                                                    <a type="button" data-bs-toggle="modal"
+                                                        th:data-bs-target="'#TodoMove' + ${pendiente.id}">
+                                                        <i class='fas fa-rocket me-2'></i>
+                                                        <span>Mover</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Modal PARA EDITAR-->
+                                        <div class="modal fade" th:id="'TodoEdit' + ${pendiente.id}" tabindex="-1"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true" id="exampleModal"
+                                            style="background-color: rgba(0, 0, 0, 0.7);">
+                                            <div class="modal-dialog  modal-dialog-centered ">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">
+                                                            Editar Tarea
+                                                        </h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <!--FORM PARA editar-->
+                                                        <form th:action="@{/tarea/editar}" method="POST"
+                                                            style="width:100%;margin:0%">
+                                                            <div class="mx-3">
+                                                                <input type="hidden" name="id"
+                                                                    th:value="${pendiente.id}">
+                                                                <input type="hidden" name="idEspacio"
+                                                                    th:value="${espacio.id}">
+                                                                <input type="hidden" name="idUsuario"
+                                                                    th:value="${session.usuariosession.id}">
+
+                                                                <label for="tituloTarea">Titulo</label>
+                                                                <input type="text" name="titulo" class="form-control"
+                                                                    id="tituloTarea" th:value="${pendiente.titulo}">
+
+                                                                <label class="mt-2"
+                                                                    for="descripcionTarea">Descripción</label>
+                                                                <textarea name="descripcion" class="form-control"
+                                                                    id="descripcionTarea"
+                                                                    th:text="${pendiente.descripcion}"></textarea>
+                                                            </div>
+                                                            <div class="mt-3 d-flex flex-row-reverse">
+                                                                <button type="submit" class="btn btn-outline-dark">
+                                                                    <i class="far fa-save me-2"></i>
+                                                                    <span>Guardar</span>
+                                                                </button>
+                                                                <!-- Boton trigger BORRAR -->
+                                                                <a class="btn btn-warning me-3" data-bs-toggle="modal"
+                                                                    th:data-bs-target="'#TodoBorrar' + ${pendiente.id}"
+                                                                    role="button">
+                                                                    <i class="far fa-trash-alt me-2"></i>
+                                                                    <span>Borrar</span>
+                                                                </a>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Modal PARA CAMBIAR DE ESTADO-->
+                                        <div class="modal fade" th:id="'TodoMove' + ${pendiente.id}" tabindex="-1"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true"
+                                            style="background-color: rgba(0, 0, 0, 0.7);">
+                                            <div class="modal-dialog  modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Mover
+                                                            Tarea</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <!--FORM PARA estado-->
+                                                        <form th:action="@{/tarea/estado}" method="POST"
+                                                            style="width:100%;margin:0%">
+                                                            <input type="hidden" name="idEspacio"
+                                                                th:value="${espacio.id}">
+                                                            <input type="hidden" name="idUsuario"
+                                                                th:value="${session.usuariosession.id}">
+                                                            <input type="hidden" name="id" th:value="${pendiente.id}">
+                                                            <!-- Info de tarea seleccionada -->
+                                                            <div class="card mb-4">
+                                                                <div class="card-body" id="parent">
+                                                                    <h5 class="card-title"
+                                                                        th:text="${pendiente.titulo}"></h5>
+                                                                    <p class="card-text"
+                                                                        th:text="${pendiente.descripcion}">
+                                                                    </p>
+                                                                    <div id="hover-content">
+                                                                        <a type="button" data-bs-toggle="modal"
+                                                                            th:data-bs-target="'#TodoEdit' + ${pendiente.id}">
+                                                                            <i class='fas fa-pencil-alt me-2'></i>Editar
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- Body del cambio de estado -->
+                                                            <div class="form-control">
+                                                                <label class="mt-1"
+                                                                    for="estadoTareaSeleccionada">Estado</label>
+                                                                <select class="form-select form-select-sm mb-2"
+                                                                    aria-label=".form-select-sm example" name="estado">
+                                                                    <option selected disabled
+                                                                        th:text="${pendiente.estado.valor}">
+                                                                    </option>
+                                                                    <option th:each="estado : ${estados}"
+                                                                        th:value="${estado}"
+                                                                        th:if="${estado.valor != 'Pendientes'}"
+                                                                        th:text="${estado.valor}"></option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="mt-3 d-flex flex-row-reverse">
+                                                                <button type="submit" class="btn btn-outline-dark">
+                                                                    <i class="fas fa-rocket me-2"></i>
+                                                                    <span>Mover</span>
+                                                                </button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Modal Para confirmar borrado -->
+                                        <div class="modal fade bg-chucky" th:id="TodoBorrar + ${pendiente.id}"
+                                            aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalToggleLabel">Confirmar
+                                                            Borrado</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        ¿Éstas seguro que deseas eliminar la tarea?
+                                                    </div>
+                                                    <form th:action="@{/tarea/eliminar}" method="POST">
+                                                        <input type="hidden" name="id" th:value="${pendiente.id}">
+                                                        <input type="hidden" name="idEspacio" th:value="${espacio.id}">
+                                                        <input type="hidden" name="idUsuario"
+                                                            th:value="${session.usuariosession.id}">
+
+                                                        <div class="modal-footer">
+                                                            <button type="submit" class="btn btn-danger"
+                                                                data-bs-target="#close" data-bs-toggle="modal"
+                                                                data-bs-dismiss="modal"><i
+                                                                    class="far fa-trash-alt me-2"></i>Borrar
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!-- fin div de iteración -->
+
+                                    <!-- Boton trigger modal CREAR TAREA -->
+                                    <div class="card" id="list">
+                                        <div class="card-body">
+                                            <a type="button" class="btn-sm btn-danger" data-bs-toggle="modal"
+                                                data-bs-target="#staticModalCrearTarea">
+                                                <i class="fas fa-wrench me-2"></i>
+                                                <span>+ Añadir un tarea</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Columna IN_PROGRESS -->
+                                <div class="flex-column col-xxl-2 col-xl-3 col-lg-3 col-lg-2 col-md-4 p-4 " id="list2">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="card-header">
+                                                <h4 id="tittleList">En proceso</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div th:each="enProgreso : ${realizandose}">
+                                        <div class="card">
+                                            <div class="card-body" id="parent">
+                                                <p class="fw-bolder" th:text="${enProgreso.titulo}"></p>
+                                                <p th:text="${enProgreso.descripcion}"></p>
+                                                <div id="hover-content">
+                                                    <!-- Boton trigger modal Editar -->
+                                                    <a type="button" data-bs-toggle="modal"
+                                                        th:data-bs-target="'#InProgressEdit' + ${enProgreso.id}">
+                                                        <i class='fas fa-pencil-alt me-2'></i>
+                                                        <span class="me-4">Editar</span>
+                                                    </a>
+                                                    <!-- Boton trigger modal Mover Estado -->
+                                                    <a type="button" data-bs-toggle="modal"
+                                                        th:data-bs-target="'#InProgressMove' + ${enProgreso.id}">
+                                                        <i class='fas fa-rocket me-2'></i>
+                                                        <span>Mover</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Modal PARA EDITAR-->
+                                        <div class="modal fade" th:id="'InProgressEdit' + ${enProgreso.id}"
+                                            tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog  modal-dialog-centered ">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Editar Tarea
+                                                        </h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <!--FORM PARA editar-->
+                                                        <form th:action="@{/tarea/editar}" method="POST"
+                                                            style="width:100%;margin:0%">
+                                                            <div class="mx-3">
+                                                                <input type="hidden" name="id"
+                                                                    th:value="${enProgreso.id}">
+                                                                <input type="hidden" name="idEspacio"
+                                                                    th:value="${espacio.id}">
+                                                                <input type="hidden" name="idUsuario"
+                                                                    th:value="${session.usuariosession.id}">
+
+                                                                <label for="tituloTarea">Titulo</label>
+                                                                <input type="text" name="titulo" class="form-control"
+                                                                    id="tituloTarea" th:value="${enProgreso.titulo}">
+
+                                                                <label class="mt-2"
+                                                                    for="descripcionTarea">Descripción</label>
+                                                                <textarea name="descripcion" class="form-control"
+                                                                    id="descripcionTarea"
+                                                                    th:text="${enProgreso.descripcion}"></textarea>
+                                                            </div>
+                                                            <div class="mt-3 d-flex flex-row-reverse">
+                                                                <button type="submit" class="btn btn-secondary">
+                                                                    <i class="far fa-save me-2"></i>
+                                                                    <span>Guardar</span>
+                                                                </button>
+                                                                <!-- Boton trigger BORRAR -->
+                                                                <a class="btn btn-warning me-3" data-bs-toggle="modal"
+                                                                    th:data-bs-target="'#InProgressBorrar' + ${enProgreso.id}"
+                                                                    role="button">
+                                                                    <i class="far fa-trash-alt me-2"></i>
+                                                                    <span>Borrar</span>
+                                                                </a>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Modal PARA CAMBIAR DE ESTADO-->
+                                        <div class="modal fade" th:id="'InProgressMove' + ${enProgreso.id}"
+                                            tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+                                            style="background-color: rgba(0, 0, 0, 0.7);">
+                                            <div class="modal-dialog  modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Mover Tarea
+                                                        </h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <!--FORM PARA estado-->
+                                                        <form th:action="@{/tarea/estado}" method="POST"
+                                                            style="width:100%;margin:0%">
+                                                            <input type="hidden" name="idEspacio"
+                                                                th:value="${espacio.id}">
+                                                            <input type="hidden" name="idUsuario"
+                                                                th:value="${session.usuariosession.id}">
+                                                            <input type="hidden" name="id" th:value="${enProgreso.id}">
+                                                            <!-- Info de tarea seleccionada -->
+                                                            <div class="card mb-4">
+                                                                <div class="card-body" id="parent">
+                                                                    <h5 class="card-title"
+                                                                        th:text="${enProgreso.titulo}"></h5>
+                                                                    <p class="card-text"
+                                                                        th:text="${enProgreso.descripcion}"></p>
+                                                                    <div id="hover-content">
+                                                                        <a type="button" data-bs-toggle="modal"
+                                                                            th:data-bs-target="'#InProgressEdit' + ${enProgreso.id}">
+                                                                            <i class='fas fa-pencil-alt me-2'></i>Editar
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- Body del cambio de estado -->
+                                                            <div class="form-control">
+                                                                <label class="mt-1"
+                                                                    for="estadoTareaSeleccionada">Estado</label>
+                                                                <select class="form-select form-select-sm mb-2"
+                                                                    aria-label=".form-select-sm example" name="estado">
+                                                                    <option selected disabled
+                                                                        th:text="${enProgreso.estado.valor}">
+                                                                    </option>
+                                                                    <option th:each="estado : ${estados}"
+                                                                        th:value="${estado}"
+                                                                        th:if="${estado.valor != 'En proceso'}"
+                                                                        th:text="${estado.valor}"></option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="mt-3 d-flex flex-row-reverse">
+                                                                <button type="submit" class="btn btn-outline-dark">
+                                                                    <i class="fas fa-rocket me-2"></i>
+                                                                    <span>Mover</span>
+                                                                </button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Modal Para confirmar borrado -->
+                                        <div class="modal fade bg-chucky" th:id="InProgressBorrar + ${enProgreso.id}"
+                                            aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalToggleLabel">Confirmar
+                                                            Borrado</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        ¿Éstas seguro que deseas eliminar la tarea?
+                                                    </div>
+                                                    <form th:action="@{/tarea/eliminar}" method="POST">
+                                                        <input type="hidden" name="id" th:value="${enProgreso.id}">
+                                                        <input type="hidden" name="idEspacio" th:value="${espacio.id}">
+                                                        <input type="hidden" name="idUsuario"
+                                                            th:value="${session.usuariosession.id}">
+
+                                                        <div class="modal-footer">
+                                                            <button type="submit" class="btn btn-danger"
+                                                                data-bs-target="#close" data-bs-toggle="modal"
+                                                                data-bs-dismiss="modal"><i
+                                                                    class="far fa-trash-alt me-2"></i>Borrar
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!-- fin iteración -->
+                                </div>
+
+                                <!-- Columna FRINISHED -->
+                                <div class="flex-column col-xxl-2  col-xl-3 col-lg-3 col-lg-2 col-md-4 p-4" id="list2">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="card-header">
+                                                <h4 id="tittleList">Realizadas</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div th:each="finalizada : ${finalizadas}">
+                                        <div class="card">
+                                            <div class="card-body" id="parent">
+                                                <p class="fw-bolder" th:text="${finalizada.titulo}"></p>
+                                                <p th:text="${finalizada.descripcion}"></p>
+                                                <div id="hover-content">
+                                                    <!-- Boton trigger modal Editar -->
+                                                    <a type="button" data-bs-toggle="modal"
+                                                        th:data-bs-target="'#FinishedEdit' + ${finalizada.id}">
+                                                        <i class='fas fa-pencil-alt me-2'></i>
+                                                        <span class="me-4">Editar</span>
+                                                    </a>
+                                                    <!-- Boton trigger modal Mover Estado -->
+                                                    <a type="button" data-bs-toggle="modal"
+                                                        th:data-bs-target="'#FinishedMove' + ${finalizada.id}">
+                                                        <i class='fas fa-rocket me-2'></i>
+                                                        <span>Mover</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Modal PARA EDITAR-->
+                                        <div class="modal fade" th:id="'FinishedEdit' + ${finalizada.id}" tabindex="-1"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog  modal-dialog-centered ">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Editar Tarea</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <!--FORM PARA editar-->
+                                                        <form th:action="@{/tarea/editar}" method="POST"
+                                                            style="width:100%;margin:0%">
+                                                            <div class="mx-3">
+                                                                <input type="hidden" name="id"
+                                                                    th:value="${finalizada.id}">
+                                                                <input type="hidden" name="idEspacio"
+                                                                    th:value="${espacio.id}">
+                                                                <input type="hidden" name="idUsuario"
+                                                                    th:value="${session.usuariosession.id}">
+
+                                                                <label for="tituloTarea">Titulo</label>
+                                                                <input type="text" name="titulo" class="form-control"
+                                                                    id="tituloTarea" th:value="${finalizada.titulo}">
+
+                                                                <label class="mt-2"
+                                                                    for="descripcionTarea">Descripción</label>
+                                                                <textarea name="descripcion" class="form-control"
+                                                                    id="descripcionTarea"
+                                                                    th:text="${finalizada.descripcion}"></textarea>
+                                                            </div>
+                                                            <div class="mt-3 d-flex flex-row-reverse">
+                                                                <button type="submit" class="btn btn-secondary">
+                                                                    <i class="far fa-save me-2"></i>
+                                                                    <span>Guardar</span>
+                                                                </button>
+                                                                <!-- Boton trigger BORRAR -->
+                                                                <a class="btn btn-warning me-3" data-bs-toggle="modal"
+                                                                    th:data-bs-target="'#FinishedBorrar' + ${finalizada.id}"
+                                                                    role="button">
+                                                                    <i class="far fa-trash-alt me-2"></i>
+                                                                    <span>Borrar</span>
+                                                                </a>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Modal PARA CAMBIAR DE ESTADO-->
+                                        <div class="modal fade" th:id="'FinishedMove' + ${finalizada.id}" tabindex="-1"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true"
+                                            style="background-color: rgba(0, 0, 0, 0.7);">
+                                            <div class="modal-dialog  modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Mover Tarea</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <!--FORM PARA estado-->
+                                                        <form th:action="@{/tarea/estado}" method="POST"
+                                                            style="width:100%;margin:0%">
+                                                            <input type="hidden" name="idEspacio"
+                                                                th:value="${espacio.id}">
+                                                            <input type="hidden" name="idUsuario"
+                                                                th:value="${session.usuariosession.id}">
+                                                            <input type="hidden" name="id" th:value="${finalizada.id}">
+                                                            <!-- Info de tarea seleccionada -->
+                                                            <div class="card mb-4">
+                                                                <div class="card-body" id="parent">
+                                                                    <h5 class="card-title"
+                                                                        th:text="${finalizada.titulo}"></h5>
+                                                                    <p class="card-text"
+                                                                        th:text="${finalizada.descripcion}"></p>
+                                                                    <div id="hover-content">
+                                                                        <a type="button" data-bs-toggle="modal"
+                                                                            th:data-bs-target="'#FinishedEdit' + ${finalizada.id}">
+                                                                            <i class='fas fa-pencil-alt me-2'></i>Editar
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- Body del cambio de estado -->
+                                                            <div class="form-control">
+                                                                <label class="mt-1"
+                                                                    for="estadoTareaSeleccionada">Estado</label>
+                                                                <select class="form-select form-select-sm mb-2"
+                                                                    aria-label=".form-select-sm example" name="estado">
+                                                                    <option selected disabled
+                                                                        th:text="${finalizada.estado.valor}"></option>
+                                                                    <option th:each="estado : ${estados}"
+                                                                        th:value="${estado}"
+                                                                        th:if="${estado.valor != 'Realizadas'}"
+                                                                        th:text="${estado.valor}"></option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="mt-3 d-flex flex-row-reverse">
+                                                                <button type="submit" class="btn btn-outline-dark">
+                                                                    <i class="fas fa-rocket me-2"></i>
+                                                                    <span>Mover</span>
+                                                                </button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Modal Para confirmar borrado -->
+                                        <div class="modal fade bg-chucky" th:id="FinishedBorrar + ${finalizada.id}"
+                                            aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalToggleLabel">Confirmar
+                                                            Borrado</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        ¿Éstas seguro que deseas eliminar la tarea?
+                                                    </div>
+                                                    <form th:action="@{/tarea/eliminar}" method="POST">
+                                                        <input type="hidden" name="id" th:value="${finalizada.id}">
+                                                        <input type="hidden" name="idEspacio" th:value="${espacio.id}">
+                                                        <input type="hidden" name="idUsuario"
+                                                            th:value="${session.usuariosession.id}">
+
+                                                        <div class="modal-footer">
+                                                            <button type="submit" class="btn btn-danger"
+                                                                data-bs-target="#close" data-bs-toggle="modal"
+                                                                data-bs-dismiss="modal"><i
+                                                                    class="far fa-trash-alt me-2"></i>Borrar
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!-- fin iteración -->
+                                </div>
+
+                                <!--NOMBRE ESPACIO DE TRABAJO-->
+                                <div class="flex-column  col-xxl-6 col-xl-3 col-lg-3 p-4  d-flex align-items-end" id="">
+                                    <div class="card bd-highlight d-md-none d-lg-block d-none d-sm-block"
+                                        id="cardNameWorkSpace">
+                                        <div class="card-body">
+                                            <h4 class="text-center align-top " id="tittleList"
+                                                th:text="${espacio.nombre}"></h4>
+                                        </div>
+                                    </div>
+                                    <!-- Añadir una lista-->
+                                    <div class="card mt-auto p-2 bd-highlight">
+                                        <div class="card-body">
+                                            <div class="card-header">
+                                                <h4 id="tittleList">Añadir una lista</h4>
+                                            </div>
+                                            <div class="card-body">
+                                                <a href="#" class="btn-sm btn-warning">+ </a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- fin Body de las columans -->
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

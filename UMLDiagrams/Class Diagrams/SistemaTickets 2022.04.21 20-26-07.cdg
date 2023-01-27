@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="SistemaTickets">
+  <ClassDiagramComponents>
+    <Class name="Usuario" package="" visibility="public" xPosition="438.0" yPosition="-408.0">
+      <Fields>
+        <Field name="id" type="String" visibility="private"/>
+        <Field name="nombre" type="String" visibility="private"/>
+        <Field name="apellido" type="String" visibility="private"/>
+        <Field name="fechaNacimiento" type="Date" visibility="private"/>
+        <Field name="fotoPerfil" type="Imagen" visibility="private"/>
+        <Field name="correo" type="String" visibility="private"/>
+        <Field name="clave" type="String" visibility="private"/>
+        <Field name="fechaAlta" type="Date" visibility="private"/>
+        <Field name="fechaBaja" type="Date" visibility="private"/>
+        <Field name="activo" type="Boolean" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="untitledMethod" returnType="void" visibility="public"/>
+        <Method name="untitledMethod1" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Imagen" package="" visibility="public" xPosition="505.0" yPosition="-297.0">
+      <Fields>
+        <Field name="id" type="String" visibility="private"/>
+        <Field name="mime" type="String" visibility="private"/>
+        <Field name="nombre" type="String" visibility="private"/>
+        <Field name="contenido" type="Byte" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods/>
+    </Class>
+    <Class name="EspacioTrabajo" package="" visibility="public" xPosition="882.0" yPosition="43.0">
+      <Fields>
+        <Field name="nombreEspacio" type="String" visibility="private"/>
+        <Field name="id" type="String" visibility="private"/>
+        <Field name="tareas" type="List&lt;Tarea&gt;" visibility="private"/>
+        <Field name="fondo" type="Imagen" visibility="private"/>
+        <Field name="fechaCreacion" type="Date" visibility="private"/>
+        <Field name="activo" type="Booolean" visibility="private"/>
+        <Field name="usuarios" type="List&lt;Usuario&gt;" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods/>
+    </Class>
+    <Class name="Tarea" package="" visibility="public" xPosition="663.0" yPosition="43.0">
+      <Fields>
+        <Field name="titulo" type="String" visibility="private"/>
+        <Field name="descripcion" type="String" visibility="private"/>
+        <Field name="estados" type="List&lt;String&gt;" visibility="private"/>
+        <Field name="fechaInicio" type="Date" visibility="private"/>
+        <Field name="fechaFin" type="Date" visibility="private"/>
+        <Field name="activo" type="Boolean" visibility="private"/>
+        <Field name="usuarios" type="List&lt;Usuario&gt;" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods/>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations/>
+</ClassDiagram>

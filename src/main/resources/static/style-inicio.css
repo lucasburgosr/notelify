@@ -1,0 +1,70 @@
+:root {
+/*    --primary: #111b54;*/
+    --light: #ffffff;
+    --grey: #efefef;
+}
+
+body {
+    overflow: hidden;
+    font-weight: 300;
+    color: #111b54;
+}
+
+#notel {
+    position: absolute;
+    top: 5px;
+    left: 1px;
+    margin-left: 55px;
+    margin-top: 4px;
+}
+
+.bg-primary {
+    background-color: #111b54 !important;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.btn {
+    border: 0;
+}
+
+#sidebar-container {
+    min-height: 100vh;
+}
+
+#sidebar-container .menu {
+    width: 18rem;
+}
+
+.btn-search {
+    top: 2px;
+    right: 0;
+}
+
+#content {
+    overflow-y: auto;
+    height: 100vh;
+    padding-bottom: 5rem;
+}
+
+.btn-primary {
+    background-color: blueviolet !important;
+    position: absolute;
+    top: 3px;
+    margin: 15px;
+}
+
+#carouselExampleSlidesOnly {
+    height: 400px;
+    width: 900px;
+}
+
+.avatar {
+    max-width: 30px;
+}
+
+.bbt {
+    background-color: #0d0d13;
+}

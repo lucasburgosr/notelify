@@ -1,0 +1,276 @@
+:root {
+    font-size: 10px;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+html {
+    background-image: url(https://www.10wallpaper.com/wallpaper/1366x768/1403/mountain_river_snow_winter-scenery_HD_Wallpaper_1366x768.jpg);
+
+    background-size: 100% 100%; /*estandar css3*/
+}
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    background-image: url(https://www.10wallpaper.com/wallpaper/1366x768/1403/mountain_river_snow_winter-scenery_HD_Wallpaper_1366x768.jpg);
+
+    background-size: 100% 100%; /*estandar css3*/
+
+}
+
+.btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font: inherit;
+    background: none;
+    border: none;
+    color: inherit;
+    padding: 0;
+    cursor: pointer;
+}
+
+
+
+
+
+/*Espacio Tarea*/
+
+navbar {
+    background: #242525;
+    color: #ebebeb;
+    box-sizing: border-box;
+}
+
+.container {
+    background: #242525;
+}
+
+.navbar-login{
+    width: 305px;
+    padding: 10px;
+    padding-bottom: 0px;
+}
+
+.navbar-login-session{
+   
+    padding: 10px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+}
+
+.icon-size
+{
+    font-size: 100px;
+}
+
+.image-perfil {
+    width: 100px;
+}
+
+.lists-container::-webkit-scrollbar {
+    height: 2.4rem;
+}
+
+.lists-container::-webkit-scrollbar-thumb {
+    background-color: #81e492;
+    border: 0.8rem solid #10912c;
+    border-top-width: 0;
+}
+
+.lists-container {
+    display: flex;
+    align-items: start;
+    padding: 0 0.8rem 0.8rem;
+    overflow-x: auto;
+    height: calc(100vh - 8.6rem);
+}
+
+.list {
+    flex: 0 0 27rem;
+    display: flex;
+    flex-direction: column;
+    background-color: #e2e4e6;
+    max-height: calc(100vh - 11.8rem);
+    border-radius: 0.3rem;
+    margin-right: 1rem;
+}
+
+.list:last-of-type {
+    margin-right: 0;
+}
+
+.list-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #333;
+    padding: 1rem;
+}
+
+.list-items {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-content: start;
+    padding: 0 0.6rem 0.5rem;
+    overflow-y: auto;
+}
+
+.list-items::-webkit-scrollbar {
+    width: 1.6rem;
+}
+
+.list-items::-webkit-scrollbar-thumb {
+    background-color: #c4c9cc;
+    border-right: 0.6rem solid #e2e4e6;
+}
+
+.list-items li {
+    font-size: 1.4rem;
+    font-weight: 400;
+    line-height: 1.3;
+    background-color: #fff;
+    padding: 0.65rem 0.6rem;
+    color: #4d4d4d;
+    border-bottom: 0.1rem solid #ccc;
+    border-radius: 0.3rem;
+    margin-bottom: 0.6rem;
+    word-wrap: break-word;
+    cursor: pointer;
+}
+
+.list-items li:last-of-type {
+    margin-bottom: 0;
+}
+
+.list-items li:hover {
+    background-color: #eee;
+}
+
+.add-card-btn {
+    display: block;
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: #838c91;
+    padding: 1rem;
+    text-align: left;
+    cursor: pointer;
+}
+
+.add-card-btn:hover {
+    background-color: #cdd2d4;
+    color: #4d4d4d;
+    text-decoration: underline;
+}
+
+.add-list-btn {
+    flex: 0 0 27rem;
+    display: block;
+    font-size: 1.4rem;
+    font-weight: 400;
+    background-color: #0e8532;
+    color: #ace0a5;
+    padding: 1rem;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    transition: background-color 150ms;
+    text-align: left;
+}
+
+.add-list-btn:hover {
+    background-color: #82c788;
+}
+
+.add-card-btn::after,
+.add-list-btn::after {
+    content: '...';
+}
+
+footer {
+    background: #242525;
+    color: #ebebeb;
+    box-sizing: border-box;
+
+}
+
+footer .content {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin: 0 auto;
+    max-width: 1550px;
+    padding: 32px 16px;
+}
+
+footer .content dl {
+    flex-grow: 1;
+    margin: 0 16px 16px;
+}
+
+footer .content dl dt {
+    color: #a6a6a6;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+footer .content dl dt.logo img {
+    width: 200px;
+}
+
+footer .content dl dd.copy-social {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    font-size: 22px;
+    line-height: 22px;
+    margin: 16px 0 0;
+}
+
+footer .content dl dd.copy-social span {
+    border-right: 1px solid #a6a6a6;
+    font-size: 16px;
+    line-height: 22px;
+    margin: 0 8px 0 0;
+    padding: 0 16px 0 0;
+}
+
+footer .content dl dd.copy-social a {
+    margin: 0 8px;
+    margin-top: 0px;
+    margin-right: 8px;
+    margin-bottom: 0px;
+    margin-left: 8px;
+}
+
+footer .content dl dd a {
+    color: #ebebeb;
+    text-decoration: none;
+
+}
+
+code, svg.icon {
+    display: inline-block;
+}
+svg.icon {
+    fill: currentColor;
+    height: 1em;
+    vertical-align: text-top;
+}
+
+svg.icon {
+    fill: currentColor;
+}
+
+.egg-logo{
+    width: 10px;
+}
+
+.ln-logo{
+    width: 15px;
+}

@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="main.java.com.proyectoFinal.entidades">
+  <ClassDiagramComponents>
+    <Class name="Imagen" package="com.proyectoFinal.entidades" visibility="public" xPosition="984.0" yPosition="10.0">
+      <Fields>
+        <Field name="id" type="String" visibility="private"/>
+        <Field name="mime" type="String" visibility="private"/>
+        <Field name="nombre" type="String" visibility="private"/>
+        <Field name="contenido" type="byte[]" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="id"/>
+          <Argument type="String" name="mime"/>
+          <Argument type="String" name="nombre"/>
+          <Argument type="byte[]" name="contenido"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getId" returnType="String" visibility="public"/>
+        <Method name="setId" returnType="void" visibility="public">
+          <Argument type="String" name="id"/>
+        </Method>
+        <Method name="getMime" returnType="String" visibility="public"/>
+        <Method name="setMime" returnType="void" visibility="public">
+          <Argument type="String" name="mime"/>
+        </Method>
+        <Method name="getNombre" returnType="String" visibility="public"/>
+        <Method name="setNombre" returnType="void" visibility="public">
+          <Argument type="String" name="nombre"/>
+        </Method>
+        <Method name="getContenido" returnType="byte[]" visibility="public"/>
+        <Method name="setContenido" returnType="void" visibility="public">
+          <Argument type="byte[]" name="contenido"/>
+        </Method>
+        <Method name="toString" returnType="String" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Usuario" package="com.proyectoFinal.entidades" visibility="public" xPosition="1468.0" yPosition="72.0">
+      <Fields>
+        <Field name="id" type="String" visibility="private"/>
+        <Field name="email" type="String" visibility="private"/>
+        <Field name="password" type="String" visibility="private"/>
+        <Field name="rol" type="Rol" visibility="private"/>
+        <Field name="nombre" type="String" visibility="private"/>
+        <Field name="apellido" type="String" visibility="private"/>
+        <Field name="fechaNacimiento" type="Date" visibility="private"/>
+        <Field name="fotoPerfil" type="Imagen" visibility="private"/>
+        <Field name="fechaAlta" type="Date" visibility="private"/>
+        <Field name="fechaBaja" type="Date" visibility="private"/>
+        <Field name="activo" type="Boolean" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="id"/>
+          <Argument type="String" name="email"/>
+          <Argument type="String" name="password"/>
+          <Argument type="Rol" name="rol"/>
+          <Argument type="String" name="nombre"/>
+          <Argument type="String" name="apellido"/>
+          <Argument type="Date" name="fechaNacimiento"/>
+          <Argument type="Imagen" name="fotoPerfil"/>
+          <Argument type="Date" name="fechaAlta"/>
+          <Argument type="Date" name="fechaBaja"/>
+          <Argument type="Boolean" name="activo"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getId" returnType="String" visibility="public"/>
+        <Method name="setId" returnType="void" visibility="public">
+          <Argument type="String" name="id"/>
+        </Method>
+        <Method name="getEmail" returnType="String" visibility="public"/>
+        <Method name="setEmail" returnType="void" visibility="public">
+          <Argument type="String" name="email"/>
+        </Method>
+        <Method name="getPassword" returnType="String" visibility="public"/>
+        <Method name="setPassword" returnType="void" visibility="public">
+          <Argument type="String" name="password"/>
+        </Method>
+        <Method name="getRol" returnType="Rol" visibility="public"/>
+        <Method name="setRol" returnType="void" visibility="public">
+          <Argument type="Rol" name="rol"/>
+        </Method>
+        <Method name="getNombre" returnType="String" visibility="public"/>
+        <Method name="setNombre" returnType="void" visibility="public">
+          <Argument type="String" name="nombre"/>
+        </Method>
+        <Method name="getApellido" returnType="String" visibility="public"/>
+        <Method name="setApellido" returnType="void" visibility="public">
+          <Argument type="String" name="apellido"/>
+        </Method>
+        <Method name="getFechaNacimiento" returnType="Date" visibility="public"/>
+        <Method name="setFechaNacimiento" returnType="void" visibility="public">
+          <Argument type="Date" name="fechaNacimiento"/>
+        </Method>
+        <Method name="getFotoPerfil" returnType="Imagen" visibility="public"/>
+        <Method name="setFotoPerfil" returnType="void" visibility="public">
+          <Argument type="Imagen" name="fotoPerfil"/>
+        </Method>
+        <Method name="getFechaAlta" returnType="Date" visibility="public"/>
+        <Method name="setFechaAlta" returnType="void" visibility="public">
+          <Argument type="Date" name="fechaAlta"/>
+        </Method>
+        <Method name="getFechaBaja" returnType="Date" visibility="public"/>
+        <Method name="setFechaBaja" returnType="void" visibility="public">
+          <Argument type="Date" name="fechaBaja"/>
+        </Method>
+        <Method name="getActivo" returnType="Boolean" visibility="public"/>
+        <Method name="setActivo" returnType="void" visibility="public">
+          <Argument type="Boolean" name="activo"/>
+        </Method>
+        <Method name="toString" returnType="String" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Tarea" package="com.proyectoFinal.entidades" visibility="public" xPosition="853.0" yPosition="606.0">
+      <Fields>
+        <Field name="id" type="String" visibility="private"/>
+        <Field name="titulo" type="String" visibility="private"/>
+        <Field name="descripcion" type="String" visibility="private"/>
+        <Field name="estado" type="Estado" visibility="private"/>
+        <Field name="usuarios" type="List&lt;Usuario&gt;" visibility="private"/>
+        <Field name="activo" type="Boolean" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="id"/>
+          <Argument type="String" name="titulo"/>
+          <Argument type="String" name="descripcion"/>
+          <Argument type="Estado" name="estado"/>
+          <Argument type="List&lt;Usuario&gt;" name="usuarios"/>
+          <Argument type="Boolean" name="activo"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getId" returnType="String" visibility="public"/>
+        <Method name="setId" returnType="void" visibility="public">
+          <Argument type="String" name="id"/>
+        </Method>
+        <Method name="getTitulo" returnType="String" visibility="public"/>
+        <Method name="setTitulo" returnType="void" visibility="public">
+          <Argument type="String" name="titulo"/>
+        </Method>
+        <Method name="getDescripcion" returnType="String" visibility="public"/>
+        <Method name="setDescripcion" returnType="void" visibility="public">
+          <Argument type="String" name="descripcion"/>
+        </Method>
+        <Method name="getEstado" returnType="Estado" visibility="public"/>
+        <Method name="setEstado" returnType="void" visibility="public">
+          <Argument type="Estado" name="estado"/>
+        </Method>
+        <Method name="getUsuarios" returnType="List&lt;Usuario&gt;" visibility="public"/>
+        <Method name="setUsuarios" returnType="void" visibility="public">
+          <Argument type="List&lt;Usuario&gt;" name="usuarios"/>
+        </Method>
+        <Method name="getActivo" returnType="Boolean" visibility="public"/>
+        <Method name="setActivo" returnType="void" visibility="public">
+          <Argument type="Boolean" name="activo"/>
+        </Method>
+        <Method name="toString" returnType="String" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="EspacioTrabajo" package="com.proyectoFinal.entidades" visibility="public" xPosition="49.0" yPosition="176.0">
+      <Fields>
+        <Field name="id" type="String" visibility="private"/>
+        <Field name="nombre" type="String" visibility="private"/>
+        <Field name="tareas" type="List&lt;Tarea&gt;" visibility="private"/>
+        <Field name="fondo" type="Imagen" visibility="private"/>
+        <Field name="fechaCreacion" type="Date" visibility="private"/>
+        <Field name="usuarios" type="List&lt;Usuario&gt;" visibility="private"/>
+        <Field name="activo" type="Boolean" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="id"/>
+          <Argument type="String" name="nombre"/>
+          <Argument type="List&lt;Tarea&gt;" name="tareas"/>
+          <Argument type="Imagen" name="fondo"/>
+          <Argument type="Date" name="fechaCreacion"/>
+          <Argument type="List&lt;Usuario&gt;" name="usuarios"/>
+          <Argument type="Boolean" name="activo"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getId" returnType="String" visibility="public"/>
+        <Method name="setId" returnType="void" visibility="public">
+          <Argument type="String" name="id"/>
+        </Method>
+        <Method name="getNombre" returnType="String" visibility="public"/>
+        <Method name="setNombre" returnType="void" visibility="public">
+          <Argument type="String" name="nombre"/>
+        </Method>
+        <Method name="getTareas" returnType="List&lt;Tarea&gt;" visibility="public"/>
+        <Method name="setTareas" returnType="void" visibility="public">
+          <Argument type="List&lt;Tarea&gt;" name="tareas"/>
+        </Method>
+        <Method name="getFondo" returnType="Imagen" visibility="public"/>
+        <Method name="setFondo" returnType="void" visibility="public">
+          <Argument type="Imagen" name="fondo"/>
+        </Method>
+        <Method name="getFechaCreacion" returnType="Date" visibility="public"/>
+        <Method name="setFechaCreacion" returnType="void" visibility="public">
+          <Argument type="Date" name="fechaCreacion"/>
+        </Method>
+        <Method name="getUsuarios" returnType="List&lt;Usuario&gt;" visibility="public"/>
+        <Method name="setUsuarios" returnType="void" visibility="public">
+          <Argument type="List&lt;Usuario&gt;" name="usuarios"/>
+        </Method>
+        <Method name="getActivo" returnType="Boolean" visibility="public"/>
+        <Method name="setActivo" returnType="void" visibility="public">
+          <Argument type="Boolean" name="activo"/>
+        </Method>
+        <Method name="toString" returnType="String" visibility="public"/>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <UseRelation source="com.proyectoFinal.entidades.EspacioTrabajo" target="com.proyectoFinal.entidades.Imagen" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="com.proyectoFinal.entidades.Tarea" target="com.proyectoFinal.entidades.Usuario" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="fondo" source="com.proyectoFinal.entidades.EspacioTrabajo" target="com.proyectoFinal.entidades.Imagen" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="tareas" source="com.proyectoFinal.entidades.EspacioTrabajo" target="com.proyectoFinal.entidades.Tarea" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="List&lt;Tarea&gt;"/>
+    <HasRelation name="usuarios" source="com.proyectoFinal.entidades.Tarea" target="com.proyectoFinal.entidades.Usuario" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="List&lt;Usuario&gt;"/>
+    <HasRelation name="usuarios" source="com.proyectoFinal.entidades.EspacioTrabajo" target="com.proyectoFinal.entidades.Usuario" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="List&lt;Usuario&gt;"/>
+    <UseRelation source="com.proyectoFinal.entidades.EspacioTrabajo" target="com.proyectoFinal.entidades.Tarea" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="fotoPerfil" source="com.proyectoFinal.entidades.Usuario" target="com.proyectoFinal.entidades.Imagen" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="com.proyectoFinal.entidades.Usuario" target="com.proyectoFinal.entidades.Imagen" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="com.proyectoFinal.entidades.EspacioTrabajo" target="com.proyectoFinal.entidades.Usuario" sourceCardinality="1..1" targetCardinality="1..1"/>
+  </ClassDiagramRelations>
+</ClassDiagram>
